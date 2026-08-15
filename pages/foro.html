@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Foro — MADDI</title>
+<meta name="description" content="Novedades, eventos, actualizaciones y contacto con el soporte de MADDI.">
+<link rel="icon" type="image/webp" href="../img/logo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bg-scene" aria-hidden="true">
+  <img class="bg-scene__image" src="../img/fondol.webp" alt="">
+  <div class="bg-scene__lightning"></div>
+  <div class="bg-scene__vignette"></div>
+</div>
+
+<header class="site-header">
+  <nav class="nav">
+    <a href="../index.html" class="nav__brand">
+      <img src="../img/logo.webp" alt="MADDI">
+    </a>
+    <button class="nav__toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+    <ul class="nav__links">
+      <li><a href="../index.html">Inicio</a></li>
+      <li><a href="foro.html" aria-current="page">Foro</a></li>
+      <li><a href="nosotros.html">Nosotros</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a class="btn btn--ghost" href="https://discord.gg/pamfXC4zZ" target="_blank" rel="noopener">Discord</a>
+      <a class="btn btn--gold" href="#" target="_blank" rel="noopener">Tienda</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero hero--compact">
+    <img class="hero__bg" src="../img/banner.webp" alt="">
+    <div class="hero__overlay"></div>
+    <div class="hero__particles" aria-hidden="true"></div>
+    <div class="hero__content">
+      <span class="hero__eyebrow">Novedades y soporte</span>
+      <h1 style="font-size:clamp(30px,5vw,48px);">Foro</h1>
+      <p class="hero__tagline">Enterate de los últimos eventos, actualizaciones y contactá al staff cuando lo necesites.</p>
+    </div>
+  </section>
+
+  <!-- ============ NOVEDADES ============ -->
+  <section class="section container">
+    <div class="section__head">
+      <span class="section__eyebrow">Últimas publicaciones</span>
+      <h2 class="section__title">Novedades, eventos y actualizaciones</h2>
+      <p class="section__lede" style="margin-inline:auto;">Duplicá esta tarjeta en el HTML cada vez que publiques algo nuevo.</p>
+    </div>
+
+    <div class="news-grid">
+      <article class="news-card">
+        <div class="news-card__img">
+          <!-- Reemplazar por la imagen real de la publicación -->
+          <img src="../img/zonas-banner.webp" alt="">
+        </div>
+        <div class="news-card__body">
+          <span class="news-card__tag">Evento</span>
+          <h3 class="news-card__title">Título de la novedad</h3>
+          <p class="news-card__excerpt">Un resumen breve de la novedad o el evento que se viene en el servidor.</p>
+          <p class="news-card__date">Fecha</p>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <div class="news-card__img">
+          <img src="../img/zonas-banner.webp" alt="">
+        </div>
+        <div class="news-card__body">
+          <span class="news-card__tag">Actualización</span>
+          <h3 class="news-card__title">Título de la novedad</h3>
+          <p class="news-card__excerpt">Un resumen breve de la novedad o el evento que se viene en el servidor.</p>
+          <p class="news-card__date">Fecha</p>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <div class="news-card__img">
+          <img src="../img/zonas-banner.webp" alt="">
+        </div>
+        <div class="news-card__body">
+          <span class="news-card__tag">Comunidad</span>
+          <h3 class="news-card__title">Título de la novedad</h3>
+          <p class="news-card__excerpt">Un resumen breve de la novedad o el evento que se viene en el servidor.</p>
+          <p class="news-card__date">Fecha</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ FORMULARIO DE CONTACTO ============ -->
+  <section class="section section--end container" id="contacto">
+    <div class="section__head">
+      <span class="section__eyebrow">Soporte</span>
+      <h2 class="section__title">Contactá al staff</h2>
+      <p class="section__lede" style="margin-inline:auto;">Elegí el motivo de tu mensaje y contanos qué pasó. Te vamos a responder por correo.</p>
+    </div>
+
+    <div class="form-panel" style="max-width:680px; margin:0 auto;">
+      <!--
+        Este formulario usa FormSubmit (https://formsubmit.co) para enviar el
+        mensaje directo a maddisoporte@gmail.com sin necesitar un backend
+        propio. La primera vez que alguien lo envíe, FormSubmit le manda un
+        correo de activación a esa casilla que hay que confirmar una sola vez.
+      -->
+      <form action="https://formsubmit.co/maddisoporte@gmail.com" method="POST" data-contact-form>
+        <input type="hidden" name="_subject" value="Nuevo mensaje desde el Foro de MADDI">
+        <input type="hidden" name="_captcha" value="true">
+        <input type="hidden" name="_template" value="table">
+
+        <div class="field-row">
+          <div class="field">
+            <label for="nombre">Nombre / usuario</label>
+            <input type="text" id="nombre" name="Nombre" required>
+          </div>
+          <div class="field">
+            <label for="email">Tu correo</label>
+            <input type="email" id="email" name="Correo" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="asunto">Asunto</label>
+          <select id="asunto" name="Asunto" required>
+            <option value="" disabled selected>Elegí un motivo</option>
+            <option value="Reportar abuso">Reportar abuso</option>
+            <option value="Reportar problema">Reportar problema</option>
+            <option value="Consultas">Consultas</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="mensaje">Mensaje</label>
+          <textarea id="mensaje" name="Mensaje" rows="5" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn--violet" style="width:100%;">Enviar</button>
+        <p class="form-note">Al enviar este formulario, tu mensaje llega directo a maddisoporte@gmail.com.</p>
+        <p class="form-status" data-form-status></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <div class="footer-brand">
+        <img src="../img/logo.webp" alt="MADDI">
+      </div>
+      <p class="footer-note">Servidor de Minecraft enfocado al PvP. Comunidad activa, eventos y actualizaciones constantes.</p>
+    </div>
+    <div>
+      <h4>Navegación</h4>
+      <ul>
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="foro.html">Foro</a></li>
+        <li><a href="nosotros.html">Nosotros</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Comunidad</h4>
+      <ul>
+        <li><a href="https://discord.gg/pamfXC4zZ" target="_blank" rel="noopener">Discord</a></li>
+        <li><a href="#" target="_blank" rel="noopener">Tienda</a></li>
+        <li><a href="mailto:maddisoporte@gmail.com">maddisoporte@gmail.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2026 MADDI. Todos los derechos reservados.</span>
+    <span>No afiliado con Mojang AB ni Microsoft.</span>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>

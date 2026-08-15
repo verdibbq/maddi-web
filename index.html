@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>MADDI — Servidor PvP de Minecraft</title>
+<meta name="description" content="MADDI es un servidor de Minecraft enfocado al PvP. Full PvP, tienda, comunidad y eventos. IP: maddi.lat">
+<link rel="icon" type="image/webp" href="img/logo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Fondo general: escena de batalla con parpadeo de rayos -->
+<div class="bg-scene" aria-hidden="true">
+  <img class="bg-scene__image" src="img/fondol.webp" alt="">
+  <div class="bg-scene__lightning"></div>
+  <div class="bg-scene__vignette"></div>
+</div>
+
+<header class="site-header">
+  <nav class="nav">
+    <a href="index.html" class="nav__brand">
+      <img src="img/logo.webp" alt="MADDI">
+    </a>
+    <button class="nav__toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+    <ul class="nav__links">
+      <li><a href="index.html" aria-current="page">Inicio</a></li>
+      <li><a href="pages/foro.html">Foro</a></li>
+      <li><a href="pages/nosotros.html">Nosotros</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a class="btn btn--ghost" href="https://discord.gg/pamfXC4zZ" target="_blank" rel="noopener">Discord</a>
+      <!-- Reemplazar por la URL final de la tienda en Tebex -->
+      <a class="btn btn--gold" href="#" target="_blank" rel="noopener">Tienda</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <img class="hero__bg" src="img/banner.webp" alt="Lobby de MADDI al atardecer entre cerezos">
+    <div class="hero__overlay"></div>
+    <div class="hero__particles" aria-hidden="true"></div>
+
+    <div class="hero__content">
+      <span class="hero__eyebrow">Tu aventura comienza aquí</span>
+      <img class="hero__logo" src="img/logo.webp" alt="MADDI — Servidor PvP">
+      <p class="hero__tagline">Un servidor enfocado al PvP. Farmeá, mejorá tu equipo y demostrá quién manda en la arena.</p>
+
+      <div class="hero__actions">
+        <a class="btn btn--violet" href="https://discord.gg/pamfXC4zZ" target="_blank" rel="noopener">Unirme al Discord</a>
+        <a class="btn btn--gold btn--icon" href="#" target="_blank" rel="noopener">
+          <img src="img/icon-tienda.webp" alt="">
+          Ir a la tienda
+        </a>
+      </div>
+
+      <div class="hero__status">
+        <span class="status-dot" data-status-dot></span>
+        <span data-status-label>Consultando servidor…</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ IP / STATS ============ -->
+  <div class="container">
+    <div class="ip-panel">
+      <div class="ip-panel__main">
+        <div>
+          <span class="ip-panel__label">IP del servidor</span><br>
+          <span class="ip-panel__value">maddi.lat</span>
+        </div>
+        <button class="ip-panel__copy" data-copy-ip type="button">Copiar</button>
+      </div>
+      <div class="ip-panel__stats">
+        <div class="ip-stat">
+          <span class="ip-stat__value" data-ping>—</span>
+          <span class="ip-stat__label">Ping</span>
+        </div>
+        <div class="ip-stat">
+          <span class="ip-stat__value" data-online-count>—</span>
+          <span class="ip-stat__label">Gente online</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ZONAS ============ -->
+  <section class="section container" id="zonas">
+    <div class="section__head">
+      <span class="section__eyebrow">Explorá MADDI</span>
+      <h2 class="section__title">Tres zonas, una sola aventura</h2>
+      <p class="section__lede" style="margin-inline:auto;">Social, Mágica y PvP: cada rincón del servidor tiene su propia identidad.</p>
+    </div>
+    <figure class="zones">
+      <img src="img/zonas-banner.webp" alt="Zona Social, Zona Mágica y Zona PvP de MADDI">
+    </figure>
+  </section>
+
+  <!-- ============ MODALIDAD DESTACADA ============ -->
+  <section class="section container">
+    <div class="about-grid">
+      <div class="panel panel--glow">
+        <h3>Modalidad destacada</h3>
+        <p><strong>Full PvP</strong> — el desafío definitivo de supervivencia. Compite en intensas batallas, mejorá tu armadura y demostrá tu dominio frente a otros jugadores. Es la modalidad del momento en MADDI.</p>
+        <p>Farmeá recursos, conseguí tu kit en la tienda y salí directo a pelear.</p>
+        <div style="margin-top:20px; display:flex; gap:12px; flex-wrap:wrap;">
+          <a class="btn btn--violet" href="https://discord.gg/pamfXC4zZ" target="_blank" rel="noopener">Unirme ahora</a>
+        </div>
+      </div>
+      <!-- Reemplazar por una captura real del spawn / arena de Full PvP -->
+      <div class="img-placeholder">Espacio para captura del lobby / arena Full PvP<br>(reemplazar por &lt;img&gt;)</div>
+    </div>
+  </section>
+
+  <!-- ============ ÚLTIMOS COLABORADORES / COMPRAS ============ -->
+  <section class="section container">
+    <div class="section__head">
+      <span class="section__eyebrow">Comunidad</span>
+      <h2 class="section__title">Últimos colaboradores</h2>
+    </div>
+    <div class="purchases">
+      <div class="purchases__head">
+        <span>Compras recientes</span>
+        <span data-online-count>—</span>
+      </div>
+      <div class="purchases__grid">
+        <!-- Cada avatar es un placeholder: reemplazar src por la skin real del comprador -->
+        <div class="purchases__avatar"><img src="https://api.mineatar.io/head/steve" alt=""></div>
+        <div class="purchases__avatar"><img src="https://api.mineatar.io/head/alex" alt=""></div>
+        <div class="purchases__avatar"><img src="https://api.mineatar.io/head/steve" alt=""></div>
+        <div class="purchases__avatar"><img src="https://api.mineatar.io/head/alex" alt=""></div>
+        <div class="purchases__avatar"><img src="https://api.mineatar.io/head/steve" alt=""></div>
+        <div class="purchases__avatar"><img src="https://api.mineatar.io/head/alex" alt=""></div>
+      </div>
+      <p class="purchases__note">Esta tabla es un placeholder visual. Para mostrar compras reales de Tebex hace falta conectar la Tebex Headless API (o el webhook de compras) — lo vemos cuando la tienda esté lista.</p>
+    </div>
+  </section>
+
+  <!-- ============ TIENDA CTA ============ -->
+  <section class="section section--end container">
+    <div class="shop-cta">
+      <img src="img/icon-tienda.webp" alt="">
+      <div>
+        <h3>Equipate para la pelea</h3>
+        <p>Encontrá tu próximo kit, rango o key y salí directo a la arena.</p>
+      </div>
+      <!-- Reemplazar por la URL final de la tienda en Tebex -->
+      <a class="btn btn--gold" href="#" target="_blank" rel="noopener">Ir a la tienda</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <div class="footer-brand">
+        <img src="img/logo.webp" alt="MADDI">
+      </div>
+      <p class="footer-note">Servidor de Minecraft enfocado al PvP. Comunidad activa, eventos y actualizaciones constantes.</p>
+    </div>
+    <div>
+      <h4>Navegación</h4>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="pages/foro.html">Foro</a></li>
+        <li><a href="pages/nosotros.html">Nosotros</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Comunidad</h4>
+      <ul>
+        <li><a href="https://discord.gg/pamfXC4zZ" target="_blank" rel="noopener">Discord</a></li>
+        <li><a href="#" target="_blank" rel="noopener">Tienda</a></li>
+        <li><a href="mailto:maddisoporte@gmail.com">maddisoporte@gmail.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2026 MADDI. Todos los derechos reservados.</span>
+    <span>No afiliado con Mojang AB ni Microsoft.</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

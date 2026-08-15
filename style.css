@@ -1,0 +1,925 @@
+/* ==========================================================================
+   MADDI — Servidor PvP de Minecraft
+   Sistema de diseño: oscuro / violeta imperial, tipografía elegante y ruda
+   ========================================================================== */
+
+:root {
+  /* Color */
+  --void:        #07050d;   /* fondo base, casi negro */
+  --deep:        #120a22;   /* paneles / secciones */
+  --deep-2:      #1b0f30;   /* paneles elevados */
+  --line:        #2c1d4d;   /* bordes sutiles */
+  --violet:      #7c3aed;   /* violeta primario */
+  --violet-2:    #a855f7;   /* violeta brillante / glow */
+  --violet-soft: rgba(124, 58, 237, 0.18);
+  --gold:        #e8b923;   /* acento tienda / CTA cálido */
+  --gold-2:      #f7d774;
+  --crimson:     #c0293b;   /* acento zona PvP */
+  --text:        #efe9fb;
+  --text-muted:  #a99bd1;
+  --text-faint:  #6c5d92;
+
+  /* Type */
+  --font-display: "Cinzel", "Georgia", serif;
+  --font-body: "Inter", -apple-system, "Segoe UI", sans-serif;
+
+  /* Layout */
+  --max-w: 1180px;
+  --radius: 10px;
+  --radius-lg: 18px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--void);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; text-decoration: none; }
+
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  margin: 0;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+
+p { margin: 0; }
+
+::selection { background: var(--violet); color: #fff; }
+
+/* Foco visible accesible */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   FONDO GENERAL — imagen de batalla fija con parpadeo de rayos
+   No debe robar foco del contenido: overlays oscuros + blur leve
+   ========================================================================== */
+
+.bg-scene {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  background: var(--void);
+}
+
+.bg-scene__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  opacity: 0.24;
+  filter: saturate(0.85) contrast(1.05);
+}
+
+.bg-scene__lightning {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 40% at 50% 10%, rgba(168, 85, 247, 0.35), transparent 70%);
+  mix-blend-mode: screen;
+  animation: lightning-flicker 9s infinite;
+  opacity: 0;
+}
+
+@keyframes lightning-flicker {
+  0%, 91%, 100% { opacity: 0; }
+  92% { opacity: 0.9; }
+  92.4% { opacity: 0.1; }
+  92.8% { opacity: 0.7; }
+  93.2% { opacity: 0; }
+  96% { opacity: 0; }
+  96.3% { opacity: 0.55; }
+  96.6% { opacity: 0; }
+}
+
+.bg-scene__vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(7,5,13,0.55) 0%, rgba(7,5,13,0.88) 55%, var(--void) 100%),
+    radial-gradient(ellipse 90% 60% at 50% 0%, transparent 40%, rgba(7,5,13,0.9) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-scene__lightning { animation: none; opacity: 0; }
+}
+
+/* ==========================================================================
+   HEADER / NAV
+   ========================================================================== */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(7, 5, 13, 0.72);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  gap: 20px;
+}
+
+.nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav__brand img {
+  height: 34px;
+  width: auto;
+}
+
+.nav__links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav__links a {
+  font-family: var(--font-display);
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 6px 2px;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.nav__links a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 100%;
+  bottom: -2px;
+  height: 2px;
+  background: var(--gold);
+  transition: right 0.25s ease;
+}
+
+.nav__links a:hover,
+.nav__links a[aria-current="page"] {
+  color: #fff;
+}
+
+.nav__links a:hover::after,
+.nav__links a[aria-current="page"]::after {
+  right: 0;
+}
+
+.nav__actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.nav__toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: #fff;
+  padding: 8px 10px;
+  font-size: 18px;
+}
+
+/* ==========================================================================
+   BOTONES
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 12px 26px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+  white-space: nowrap;
+}
+
+.btn:hover { transform: translateY(-2px); }
+
+.btn--violet {
+  background: linear-gradient(135deg, var(--violet), #5b21b6);
+  color: #fff;
+  box-shadow: 0 0 0 1px rgba(168,85,247,0.35), 0 10px 24px -8px rgba(124,58,237,0.7);
+}
+.btn--violet:hover { box-shadow: 0 0 0 1px rgba(168,85,247,0.6), 0 14px 30px -6px rgba(168,85,247,0.85); }
+
+.btn--gold {
+  background: linear-gradient(135deg, var(--gold-2), var(--gold));
+  color: #241205;
+  box-shadow: 0 10px 24px -8px rgba(232,185,35,0.65);
+}
+.btn--gold:hover { filter: brightness(1.08); box-shadow: 0 14px 30px -6px rgba(232,185,35,0.85); }
+
+.btn--ghost {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--text-muted);
+}
+.btn--ghost:hover { color: #fff; border-color: var(--violet-2); }
+
+.btn--icon img { height: 20px; width: 20px; }
+
+/* ==========================================================================
+   HERO (Inicio)
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  min-height: 78vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  padding: 140px 24px 90px;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 38%;
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(7,5,13,0.35) 0%, rgba(7,5,13,0.55) 55%, var(--void) 96%),
+    linear-gradient(90deg, rgba(7,5,13,0.55), transparent 30%, transparent 70%, rgba(7,5,13,0.55));
+}
+
+.hero__particles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.petal {
+  position: absolute;
+  top: -40px;
+  width: 10px;
+  height: 10px;
+  border-radius: 60% 0 60% 0;
+  background: linear-gradient(135deg, #f0abfc, var(--violet-2));
+  opacity: 0.75;
+  animation: petal-fall linear infinite;
+}
+
+@keyframes petal-fall {
+  0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+  8%   { opacity: 0.8; }
+  100% { transform: translateY(110vh) translateX(var(--drift, 40px)) rotate(340deg); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .petal { animation: none; display: none; }
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+.hero__eyebrow {
+  font-family: var(--font-display);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: var(--gold-2);
+}
+
+.hero__logo {
+  width: min(420px, 70vw);
+  filter: drop-shadow(0 0 40px rgba(124,58,237,0.55));
+}
+
+.hero__tagline {
+  max-width: 560px;
+  color: var(--text-muted);
+  font-size: 17px;
+}
+
+.hero__actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+.hero--compact {
+  min-height: 46vh;
+  padding-top: 150px;
+  padding-bottom: 60px;
+}
+
+.hero__status {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.status-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: #3fce6a;
+  box-shadow: 0 0 10px #3fce6a;
+}
+.status-dot--off { background: #6c5d92; box-shadow: none; }
+
+/* ==========================================================================
+   IP BOX
+   ========================================================================== */
+
+.ip-panel {
+  position: relative;
+  z-index: 3;
+  margin: -46px auto 0;
+  max-width: 760px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1px;
+  background: var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,0.7);
+}
+
+.ip-panel__main {
+  background: var(--deep);
+  padding: 22px 28px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.ip-panel__label {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.ip-panel__value {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: #fff;
+  letter-spacing: 0.03em;
+}
+
+.ip-panel__copy {
+  margin-left: auto;
+  background: var(--violet-soft);
+  border: 1px solid var(--violet);
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.ip-panel__copy:hover { background: rgba(124,58,237,0.35); }
+.ip-panel__copy[data-copied="true"] { background: #21593a; border-color: #3fce6a; }
+
+.ip-panel__stats {
+  background: var(--deep-2);
+  display: flex;
+  align-items: stretch;
+}
+
+.ip-stat {
+  padding: 16px 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  border-left: 1px solid var(--line);
+  min-width: 130px;
+}
+
+.ip-stat__value {
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--gold-2);
+}
+
+.ip-stat__label {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+@media (max-width: 640px) {
+  .ip-panel { grid-template-columns: 1fr; }
+  .ip-panel__stats { flex-direction: row; }
+}
+
+/* ==========================================================================
+   SECCIONES GENERALES
+   ========================================================================== */
+
+.section {
+  padding: 110px 0 0;
+  position: relative;
+}
+
+.section__eyebrow {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold-2);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.section__title {
+  font-size: clamp(28px, 4vw, 40px);
+}
+
+.section__lede {
+  color: var(--text-muted);
+  max-width: 640px;
+  margin-top: 14px;
+  font-size: 16px;
+}
+
+.section__head {
+  text-align: center;
+  margin: 0 auto 56px;
+  max-width: 700px;
+}
+
+/* Divisor con forma de rayo, elemento distintivo de la marca */
+.divider {
+  width: 100%;
+  height: 46px;
+  margin: 0 auto;
+  display: block;
+  color: var(--violet);
+  opacity: 0.55;
+}
+
+/* ==========================================================================
+   NOSOTROS (about) — panel presentación
+   ========================================================================== */
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 28px;
+  align-items: stretch;
+}
+
+.panel {
+  background: linear-gradient(155deg, var(--deep), var(--deep-2));
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+}
+
+.panel--glow {
+  border-color: rgba(168,85,247,0.35);
+  box-shadow: 0 0 0 1px rgba(168,85,247,0.12), 0 25px 60px -30px rgba(124,58,237,0.6);
+}
+
+.panel h3 {
+  font-size: 18px;
+  color: var(--gold-2);
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+}
+
+.panel p + p { margin-top: 14px; }
+
+.panel p { color: var(--text-muted); }
+
+.featured-shot {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  position: relative;
+}
+
+.featured-shot img { width: 100%; height: 100%; object-fit: cover; }
+
+.featured-shot__tag {
+  position: absolute;
+  top: 16px; right: 16px;
+  background: rgba(7,5,13,0.7);
+  border: 1px solid var(--gold-2);
+  color: var(--gold-2);
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+
+/* ==========================================================================
+   ZONAS (banner de zonas del servidor)
+   ========================================================================== */
+
+.zones {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.zones img {
+  width: 100%;
+  display: block;
+}
+
+.zones__caption {
+  text-align: center;
+  color: var(--text-faint);
+  font-size: 13px;
+  margin-top: 12px;
+}
+
+/* ==========================================================================
+   TIENDA CTA
+   ========================================================================== */
+
+.shop-cta {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 28px;
+  background: radial-gradient(ellipse 120% 140% at 0% 0%, rgba(232,185,35,0.12), transparent 60%), var(--deep);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 26px 32px;
+}
+
+.shop-cta img { width: 84px; height: 84px; }
+
+.shop-cta h3 { font-size: 20px; color: #fff; margin-bottom: 6px; }
+.shop-cta p { color: var(--text-muted); font-size: 14px; }
+
+@media (max-width: 700px) {
+  .shop-cta { grid-template-columns: auto 1fr; }
+  .shop-cta .btn { grid-column: 1 / -1; }
+}
+
+/* ==========================================================================
+   COMPRAS RECIENTES / COLABORADORES (placeholder, listo para Tebex)
+   ========================================================================== */
+
+.purchases {
+  background: var(--deep);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+}
+
+.purchases__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.purchases__head span {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.purchases__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+  gap: 10px;
+}
+
+.purchases__avatar {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  background: linear-gradient(155deg, var(--deep-2), #241540);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.purchases__avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.purchases__note {
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--text-faint);
+  border-top: 1px dashed var(--line);
+  padding-top: 12px;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.site-footer {
+  margin-top: 140px;
+  border-top: 1px solid var(--line);
+  background: rgba(7,5,13,0.85);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 40px;
+  padding: 56px 0 32px;
+}
+
+.footer-grid h4 {
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-2);
+  margin-bottom: 16px;
+}
+
+.footer-grid ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.footer-grid a { color: var(--text-muted); font-size: 14px; }
+.footer-grid a:hover { color: #fff; }
+
+.footer-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.footer-brand img { height: 30px; }
+.footer-note { color: var(--text-faint); font-size: 13px; max-width: 320px; }
+
+.footer-bottom {
+  border-top: 1px solid var(--line);
+  padding: 18px 0;
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-faint);
+  font-size: 12px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@media (max-width: 780px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-grid > div:first-child { grid-column: 1 / -1; }
+}
+
+/* ==========================================================================
+   RESPONSIVE NAV
+   ========================================================================== */
+
+@media (max-width: 860px) {
+  .nav__toggle { display: inline-flex; align-items: center; }
+  .nav__links {
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    background: var(--deep);
+    border-bottom: 1px solid var(--line);
+    flex-direction: column;
+    gap: 0;
+    padding: 8px 0;
+    display: none;
+  }
+  .nav__links.is-open { display: flex; }
+  .nav__links a { padding: 14px 24px; width: 100%; }
+  .nav__links a::after { display: none; }
+  .about-grid { grid-template-columns: 1fr; }
+  .shop-cta { grid-template-columns: 1fr; text-align: center; }
+  .shop-cta img { margin: 0 auto; }
+}
+
+/* ==========================================================================
+   FORO — formulario de contacto y novedades
+   ========================================================================== */
+
+.form-panel {
+  background: linear-gradient(155deg, var(--deep), var(--deep-2));
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 34px;
+}
+
+.field { margin-bottom: 20px; }
+
+.field label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  background: var(--void);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 14px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  resize: vertical;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--violet-2);
+}
+
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 600px) { .field-row { grid-template-columns: 1fr; } }
+
+.form-note {
+  font-size: 12px;
+  color: var(--text-faint);
+  margin-top: 6px;
+}
+
+.form-status {
+  margin-top: 16px;
+  font-size: 13px;
+  display: none;
+}
+.form-status.is-visible { display: block; }
+.form-status--ok { color: #6ee19b; }
+.form-status--err { color: #f28b8b; }
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.news-card {
+  background: var(--deep);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.news-card:hover { border-color: rgba(168,85,247,0.5); transform: translateY(-4px); }
+
+.news-card__img { aspect-ratio: 16/9; background: var(--deep-2); overflow: hidden; }
+.news-card__img img { width: 100%; height: 100%; object-fit: cover; }
+
+.news-card__body { padding: 20px; }
+.news-card__tag {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-2);
+}
+.news-card__title { margin-top: 8px; font-size: 17px; color: #fff; }
+.news-card__excerpt { margin-top: 8px; color: var(--text-muted); font-size: 14px; }
+.news-card__date { margin-top: 14px; font-size: 12px; color: var(--text-faint); }
+
+/* ==========================================================================
+   NOSOTROS — equipo
+   ========================================================================== */
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 22px;
+}
+
+.team-card {
+  background: var(--deep);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  text-align: center;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.team-card:hover { border-color: var(--violet-2); transform: translateY(-4px); }
+
+.team-card__avatar {
+  width: 84px; height: 84px;
+  border-radius: 14px;
+  margin: 0 auto 16px;
+  overflow: hidden;
+  background: var(--deep-2);
+  border: 1px solid var(--line);
+}
+.team-card__avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.team-card__name { font-family: var(--font-display); font-size: 16px; color: #fff; }
+.team-card__role { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold-2); margin: 6px 0 12px; }
+.team-card__desc { font-size: 13px; color: var(--text-muted); }
+
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+@media (max-width: 780px) { .pillars { grid-template-columns: 1fr; } }
+
+.pillar {
+  border-left: 2px solid var(--violet);
+  padding-left: 18px;
+}
+.pillar h4 { font-size: 15px; color: var(--gold-2); letter-spacing: 0.06em; margin-bottom: 8px; }
+.pillar p { font-size: 14px; color: var(--text-muted); }
+
+.section--end { padding-bottom: 110px; }
+
+/* ==========================================================================
+   PLACEHOLDER DE IMAGEN
+   Usado donde el usuario va a pegar sus propias imágenes/capturas más
+   adelante. Reemplazar el <div class="img-placeholder"> por un <img>.
+   ========================================================================== */
+
+.img-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 220px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-lg);
+  background: repeating-linear-gradient(135deg, rgba(124,58,237,0.06) 0 10px, transparent 10px 20px), var(--deep);
+  color: var(--text-faint);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  padding: 20px;
+}
